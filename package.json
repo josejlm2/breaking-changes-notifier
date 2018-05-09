@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "build/index.js",
   "bin": {
-    "breaking-changes": "./bin/breaking-changes"
+    "breaking-changes": "./bin/breaking-changes.js"
   },
   "keywords": [
     "git",
@@ -12,5 +12,14 @@
   ],
   "repository": "git@github.com:architexas/breaking-changes-notifier.git",
   "author": "Cory A Thompson <cthompson@tamhsc.edu>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@types/shelljs": "^0.7.9",
+    "@types/yargs": "^11.0.0",
+    "shelljs": "^0.8.2",
+    "yargs": "^11.0.0"
+  },
+  "scripts": {
+    "build" : "tsc -p tsconfig.json --watch"
+  }
 }
