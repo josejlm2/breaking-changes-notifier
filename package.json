@@ -1,0 +1,16 @@
+{
+  "name": "breaking-changes-notifier",
+  "version": "0.0.1",
+  "main": "build/index.js",
+  "bin": {
+    "breaking-changes": "./bin/breaking-changes"
+  },
+  "keywords": [
+    "git",
+    "hooks",
+    "breaking"
+  ],
+  "repository": "git@github.com:architexas/breaking-changes-notifier.git",
+  "author": "Cory A Thompson <cthompson@tamhsc.edu>",
+  "license": "MIT"
+}
