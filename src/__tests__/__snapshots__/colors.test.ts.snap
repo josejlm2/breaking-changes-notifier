@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`console colors file should consist of the possible colors to print 1`] = `
+Object {
+  "Blink": "[5m",
+  "Bright": "[1m",
+  "Dim": "[2m",
+  "Hidden": "[8m",
+  "Reset": "[0m",
+  "Reverse": "[7m",
+  "Underscore": "[4m",
+  "bg": Object {
+    "Black": "[40m",
+    "Blue": "[44m",
+    "Crimson": "[48m",
+    "Cyan": "[46m",
+    "Green": "[42m",
+    "Magenta": "[45m",
+    "Red": "[41m",
+    "White": "[47m",
+    "Yellow": "[43m",
+  },
+  "fg": Object {
+    "Black": "[30m",
+    "Blue": "[34m",
+    "Crimson": "[38m",
+    "Cyan": "[36m",
+    "Green": "[32m",
+    "Magenta": "[35m",
+    "Red": "[31m",
+    "White": "[37m",
+    "Yellow": "[33m",
+  },
+}
+`;
