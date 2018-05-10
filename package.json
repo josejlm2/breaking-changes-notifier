@@ -20,6 +20,7 @@
     "yargs": "^11.0.0"
   },
   "scripts": {
-    "build" : "tsc -p tsconfig.json --watch"
+    "build" : "tsc -p tsconfig.json --watch",
+    "breaking-changes": "./bin/breaking-changes 1234 1234 1"
   }
 }
