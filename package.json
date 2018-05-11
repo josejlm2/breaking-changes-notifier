@@ -1,6 +1,7 @@
 {
   "name": "breaking-changes-notifier",
   "version": "0.0.1",
+  "description": "This is a package designed to run as a githook.",
   "main": "build/index.js",
   "bin": {
     "breaking-changes": "./bin/breaking-changes.js"
