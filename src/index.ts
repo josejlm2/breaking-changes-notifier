@@ -7,6 +7,7 @@ import colors from './colors';
 // const args = yargs.argv;
 const args = process.argv.slice(2);
 
+console.log('the arges are ', args);
 //print args
 console.log('hash1='+ args[0]);
 console.log('hash2='+ args[1]);
@@ -17,6 +18,7 @@ if(args[2] === '1') {
   const result = shell.exec(`git --no-pager log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative -n 15 --color=always`, {silent:true}).stdout;
   console.log(result);
   console.log("\n");
+
 }
 
 if(args[0] !== args[1]){
@@ -25,4 +27,5 @@ if(args[0] !== args[1]){
   console.log(colors.bg.Red, colors.fg.White, 'BREAKING CHANGES', colors.Reset);
   console.log(colors.bg.Red, colors.fg.White, 'Below are the list of breaking changes:', colors.Reset);
   console.log(colors.fg.Red,`${result}`, colors.Reset);
+  console.log("test");
 }
