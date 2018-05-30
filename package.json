@@ -23,7 +23,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json --watch",
-    "breaking-changes": "./bin/breaking-changes 1234 1234 1",
+    "breaking-changes": "./bin/breaking-changes ",
     "test": "jest --config=./jest.config.json"
   },
   "devDependencies": {
