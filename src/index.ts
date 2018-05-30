@@ -3,6 +3,7 @@
 
 // merge: regex  grep checkout changes for both // git log --merges -l
 // checkout: parsing grep checkout changes for both
+console.log('test');
 
 import * as yargs from 'yargs';
 import * as shell from 'shelljs';
