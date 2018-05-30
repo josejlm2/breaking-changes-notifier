@@ -8,7 +8,7 @@ console.log('test');
 import * as yargs from 'yargs';
 import * as shell from 'shelljs';
 import colors from './colors';
-import { inferGitCommand } from './util';
+import { inferGitCommand , parseValueWithRegex , getGitDiversionValue, displayMergeMessage} from './util';
 
 let args = String(yargs.argv.git_params);
 // const args = process.argv.slice(2);
@@ -35,21 +35,33 @@ if(parsedArgs[2] === '1') {
   console.log(result);
   console.log("\n");
   
-
 }
 
-if(parsedArgs[0] == parsedArgs[1]){
+if (type == 'checkout') {
+  console.log("the type is checkout");
+if(parsedArgs[0] !== parsedArgs[1]){
   const result = shell.exec(`git --no-pager log ${parsedArgs[1]}..${parsedArgs[0]} --grep 'setup repository to being working' | grep 'setup repository to being working'`, {silent:true}).stdout;
     
   console.log(colors.bg.Red, colors.fg.White, 'BREAKING CHANGES', colors.Reset);
   console.log(colors.bg.Red, colors.fg.White, 'Below are the list of breaking changes:', colors.Reset);
   console.log(colors.fg.Red,`${result}`, colors.Reset);
   
+ 
+}
 }
 
+
 if (type === 'merge') {
-  console.log("the type is a merge");
-  const gitRepo = shell.exec(`git --no-pager log --merges -1`);
-  console.log(gitRepo);
+  
+   const mergeMessage =  displayMergeMessage();
+  
+  const parsedValue = parseValueWithRegex(`^Merge:\\s(\\w{7,})\\s(\\w{7,})$`, mergeMessage);
+
+  if (parsedValue && parsedValue.length != 0) {
+    
+     getGitDiversionValue(parsedValue[1], parsedValue[2]);
+
+  }
+
 }
 
