@@ -2,60 +2,45 @@
 // merge: regex  grep checkout changes for both // git log --merges -l
 // checkout: parsing grep checkout changes for both
 // if there are no breaking changes extract the value out 
+// find out how to filter grep more 
 
 import * as yargs from 'yargs';
 import * as shell from 'shelljs';
 import colors from './colors';
-import { inferGitCommand , parseValueWithRegex , displayBreakingChanges} from './util';
-import {gitLogGrepChanges , gitLogDiversionHash , gitLogAllMerges ,  displayGitLog } from './shellCommands';
+import * as util from './util';
+import * as cmnd from './shellCommands';
 
 let args = String(yargs.argv.git_params);
 
-
-let type = inferGitCommand(args);
-console.log(type);
+let type = util.inferGitCommand(args);
 
  const parsedArgs = args.split(" ");
 
- console.log(parsedArgs);
-
-//print args
-console.log('hash1='+ parsedArgs[0]);
-console.log('hash2='+ parsedArgs[1]);
-console.log("show log="+ parsedArgs[2]);
-
-
- // console.log("the type is checkout");
 if(type == 'checkout' && parsedArgs[0] !== parsedArgs[1]){
 
   if(parsedArgs[2] === '1') {
-    displayGitLog();
+    cmnd.displayGitLog();
   }
   
-  const gitDiversionHash = gitLogDiversionHash(parsedArgs[0], parsedArgs[1]).substring(0, 8);
+  const gitDiversionHash = cmnd.gitLogDiversionHash(parsedArgs[0], parsedArgs[1]).substring(0, 8);
 
-  displayBreakingChanges(gitDiversionHash, parsedArgs[1]);
+  util.displayBreakingChanges(gitDiversionHash, parsedArgs[1]);
 
 }
 
-
-
 if (type === 'merge') {
 
-  displayGitLog();
+  cmnd.displayGitLog();
   
-   const mergeMessage =  gitLogAllMerges();
+   const mergeMessage =  cmnd.gitLogAllMerges();
   
-   const parsedValue = parseValueWithRegex(`^Merge:\\s(\\w{7,})\\s(\\w{7,})$`, mergeMessage);
+   const parsedValue = util.parseValueWithRegex(`^Merge:\\s(\\w{7,})\\s(\\w{7,})$`, mergeMessage);
 
   if (parsedValue && parsedValue.length != 0) {
     
-   const mergeBaseHash =  gitLogDiversionHash(parsedValue[1], parsedValue[2]).substring(0, 8);
+    const mergeBaseHash =  cmnd.gitLogDiversionHash(parsedValue[1], parsedValue[2]).substring(0, 8);
 
-   console.log("the mergebase hash ", mergeBaseHash);
-   console.log(" parsed args 2" , parsedValue[2]);
-
-     displayBreakingChanges(mergeBaseHash, parsedValue[2]);
+     util.displayBreakingChanges(mergeBaseHash, parsedValue[2]);
     
   }
 

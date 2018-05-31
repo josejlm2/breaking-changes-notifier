@@ -1,4 +1,3 @@
-import * as yargs from 'yargs';
 import * as shell from 'shelljs';
 import colors from './colors';
 
@@ -11,7 +10,7 @@ export const gitLogGrepChanges = (hash1:string, hash2: string) => {
 
   export const gitLogDiversionHash = (hash1: string, hash2: string) => {
 
-    const gitCommand = `git merge-base ${hash1} ${hash2}`;
+    const gitCommand = `git --no-pager merge-base ${hash1} ${hash2}`;
 
     const gitDiversion = shell.exec(gitCommand);
 
