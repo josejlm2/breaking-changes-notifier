@@ -1,8 +1,8 @@
 
 // merge: regex  grep checkout changes for both // git log --merges -l
 // checkout: parsing grep checkout changes for both
-// if there are no breaking changes extract the value out 
 // find out how to filter grep more 
+// write unit test for all functions 
 
 import * as yargs from 'yargs';
 import * as shell from 'shelljs';
@@ -45,4 +45,3 @@ if (type === 'merge') {
   }
 
 }
-
