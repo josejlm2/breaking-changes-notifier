@@ -10,6 +10,7 @@ import { inferGitCommand , parseValueWithRegex , GitDiversionValue, displayMerge
 
 let args = String(yargs.argv.git_params);
 
+
 let type = inferGitCommand(args);
 console.log(type);
 
@@ -30,9 +31,12 @@ if(type == 'checkout' && parsedArgs[0] !== parsedArgs[1]){
     displayGitLog();
   }
   
-   displayBreakingChanges(parsedArgs[0], parsedArgs[1]);
+  const gitDiversionHash = GitDiversionValue(parsedArgs[0], parsedArgs[1]).substring(0, 8);
+
+  displayBreakingChanges(gitDiversionHash, parsedArgs[1]);
 
 }
+
 
 
 if (type === 'merge') {
@@ -47,6 +51,7 @@ if (type === 'merge') {
     
    const mergeBaseHash =  GitDiversionValue(parsedValue[1], parsedValue[2]);
 
+   console.log(typeof mergeBaseHash);
    console.log(" parsed args 2" , parsedValue[2]);
 
      displayBreakingChanges(mergeBaseHash, parsedValue[2]);
