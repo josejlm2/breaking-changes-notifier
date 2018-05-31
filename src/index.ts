@@ -6,7 +6,7 @@
 import * as yargs from 'yargs';
 import * as shell from 'shelljs';
 import colors from './colors';
-import { inferGitCommand , parseValueWithRegex , GitDiversionValue, displayMergeMessage, displayGitLog, displayBreakingChanges} from './util';
+import { inferGitCommand , parseValueWithRegex , gitLogDiversionHash, gitLogAllMerges, displayGitLog, displayBreakingChanges} from './util';
 
 let args = String(yargs.argv.git_params);
 
@@ -31,7 +31,7 @@ if(type == 'checkout' && parsedArgs[0] !== parsedArgs[1]){
     displayGitLog();
   }
   
-  const gitDiversionHash = GitDiversionValue(parsedArgs[0], parsedArgs[1]).substring(0, 8);
+  const gitDiversionHash = gitLogDiversionHash(parsedArgs[0], parsedArgs[1]).substring(0, 8);
 
   displayBreakingChanges(gitDiversionHash, parsedArgs[1]);
 
@@ -43,13 +43,13 @@ if (type === 'merge') {
 
   displayGitLog();
   
-   const mergeMessage =  displayMergeMessage();
+   const mergeMessage =  gitLogAllMerges();
   
    const parsedValue = parseValueWithRegex(`^Merge:\\s(\\w{7,})\\s(\\w{7,})$`, mergeMessage);
 
   if (parsedValue && parsedValue.length != 0) {
     
-   const mergeBaseHash =  GitDiversionValue(parsedValue[1], parsedValue[2]);
+   const mergeBaseHash =  gitLogDiversionHash(parsedValue[1], parsedValue[2]);
 
    console.log(typeof mergeBaseHash);
    console.log(" parsed args 2" , parsedValue[2]);

@@ -43,15 +43,10 @@ export const parseValueWithRegex = (regex: string, mergeMess: string):string[] =
   }
 }
 
-
-export const GitDiversionValue = (hash1: string, hash2: string) => {
-
-  console.log("first value ", hash1);
-    console.log("second value ", hash2);
+////EXPORTED
+export const gitLogDiversionHash = (hash1: string, hash2: string) => {
 
     const gitCommand = `git merge-base ${hash1} ${hash2}`;
-
-    // console.log(gitCommand);
 
     const gitDiversion = shell.exec(gitCommand);
 
@@ -59,18 +54,18 @@ export const GitDiversionValue = (hash1: string, hash2: string) => {
 }
 
 
-export const displayMergeMessage = () => {
-  console.log("the type is a merge");
+////EXPORTED
+export const gitLogAllMerges = () => {
+  
   const gitRepo = shell.exec(`git --no-pager log --merges -1`);
   
   const mergeMessage = gitRepo.stdout;
-
-  console.log('the value is |||' , mergeMessage);
 
   return mergeMessage;
 
 }
 
+////EXPORTED
 export const displayGitLog = () => {
   console.log(colors.bg.Blue, colors.fg.White, "GIT LOG", colors.Reset);
   const result = shell.exec(`git --no-pager log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative -n 20 --color=always`, {silent:true}).stdout;
@@ -78,7 +73,8 @@ export const displayGitLog = () => {
   console.log("\n");
 }
 
-export const gitLogShellComand = (hash1:string, hash2: string) => {
+////EXPORTED
+const gitLogGrepChanges = (hash1:string, hash2: string) => {
   const result = shell.exec(`git --no-pager log ${hash1}..${hash2} --grep 'BREAKING CHANGES:' | grep 'BREAKING CHANGES'`, {silent:true}).stdout;
   return String(result); 
 }
@@ -90,15 +86,14 @@ export const logBreakingChanges = (result: string) => {
   console.log(colors.fg.Red,`${result}`, colors.Reset);
 }
 
+
 export const displayBreakingChanges = (hash1:string, hash2: string) => {
 
-  const result = gitLogShellComand(hash1, hash2);
+  const result = gitLogGrepChanges(hash1, hash2);
   
  if (result) {
     logBreakingChanges(result);
  }
-
- 
   
 }
 
