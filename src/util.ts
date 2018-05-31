@@ -97,6 +97,8 @@ export const displayBreakingChanges = (hash1:string, hash2: string) => {
  if (result) {
     logBreakingChanges(result);
  }
+
+ 
   
 }
 
