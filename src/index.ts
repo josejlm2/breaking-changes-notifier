@@ -48,6 +48,7 @@ if (type === 'merge') {
     
    const mergeBaseHash =  GitDiversionValue(parsedValue[1], parsedValue[2]);
 
+   console.log(typeof mergeBaseHash);
    console.log(" parsed args 2" , parsedValue[2]);
 
      displayBreakingChanges(mergeBaseHash, parsedValue[2]);
