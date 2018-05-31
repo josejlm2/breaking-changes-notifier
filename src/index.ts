@@ -35,10 +35,9 @@ if(parsedArgs[2] === '1') {
   console.log("\n");
   
 
-  
+
 }
 
- // console.log("the type is checkout");
 if(parsedArgs[0] !== parsedArgs[1]){
   const result = shell.exec(`git --no-pager log ${parsedArgs[1]}..${parsedArgs[0]} --grep 'test' | grep 'test'`, {silent:true}).stdout;
     
