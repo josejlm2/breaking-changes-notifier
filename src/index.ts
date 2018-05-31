@@ -1,5 +1,3 @@
-//grab provided args.
-// const [,, ...args] = process.argv
 
 // merge: regex  grep checkout changes for both // git log --merges -l
 // checkout: parsing grep checkout changes for both
