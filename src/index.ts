@@ -3,6 +3,7 @@
 
 // merge: regex  grep checkout changes for both // git log --merges -l
 // checkout: parsing grep checkout changes for both
+// if there are no breaking changes extract the value out 
 console.log('test');
 
 import * as yargs from 'yargs';
@@ -22,12 +23,10 @@ console.log(type);
 
  console.log(parsedArgs);
 
-
 //print args
 console.log('hash1='+ parsedArgs[0]);
 console.log('hash2='+ parsedArgs[1]);
 console.log("show log="+ parsedArgs[2]);
-
 
 if(parsedArgs[2] === '1') {
   console.log(colors.bg.Blue, colors.fg.White, "GIT LOG", colors.Reset);
@@ -37,17 +36,18 @@ if(parsedArgs[2] === '1') {
   
 }
 
-if (type == 'checkout') {
-  console.log("the type is checkout");
+ // console.log("the type is checkout");
 if(parsedArgs[0] !== parsedArgs[1]){
-  const result = shell.exec(`git --no-pager log ${parsedArgs[1]}..${parsedArgs[0]} --grep 'setup repository to being working' | grep 'setup repository to being working'`, {silent:true}).stdout;
+  const result = shell.exec(`git --no-pager log ${parsedArgs[1]}..${parsedArgs[0]} --grep 'test' | grep 'test'`, {silent:true}).stdout;
     
   console.log(colors.bg.Red, colors.fg.White, 'BREAKING CHANGES', colors.Reset);
   console.log(colors.bg.Red, colors.fg.White, 'Below are the list of breaking changes:', colors.Reset);
   console.log(colors.fg.Red,`${result}`, colors.Reset);
-  
- 
 }
+
+
+if (type == 'checkout') {
+
 }
 
 
@@ -55,7 +55,7 @@ if (type === 'merge') {
   
    const mergeMessage =  displayMergeMessage();
   
-  const parsedValue = parseValueWithRegex(`^Merge:\\s(\\w{7,})\\s(\\w{7,})$`, mergeMessage);
+   const parsedValue = parseValueWithRegex(`^Merge:\\s(\\w{7,})\\s(\\w{7,})$`, mergeMessage);
 
   if (parsedValue && parsedValue.length != 0) {
     
