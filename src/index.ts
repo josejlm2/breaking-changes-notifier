@@ -34,6 +34,8 @@ if(parsedArgs[2] === '1') {
   console.log(result);
   console.log("\n");
   
+
+  
 }
 
  // console.log("the type is checkout");
