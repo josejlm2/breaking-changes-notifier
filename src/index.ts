@@ -6,7 +6,8 @@
 import * as yargs from 'yargs';
 import * as shell from 'shelljs';
 import colors from './colors';
-import { inferGitCommand , parseValueWithRegex , gitLogDiversionHash, gitLogAllMerges, displayGitLog, displayBreakingChanges} from './util';
+import { inferGitCommand , parseValueWithRegex , displayBreakingChanges} from './util';
+import {gitLogGrepChanges , gitLogDiversionHash , gitLogAllMerges ,  displayGitLog } from './shellCommands';
 
 let args = String(yargs.argv.git_params);
 
@@ -49,9 +50,9 @@ if (type === 'merge') {
 
   if (parsedValue && parsedValue.length != 0) {
     
-   const mergeBaseHash =  gitLogDiversionHash(parsedValue[1], parsedValue[2]);
+   const mergeBaseHash =  gitLogDiversionHash(parsedValue[1], parsedValue[2]).substring(0, 8);
 
-   console.log(typeof mergeBaseHash);
+   console.log("the mergebase hash ", mergeBaseHash);
    console.log(" parsed args 2" , parsedValue[2]);
 
      displayBreakingChanges(mergeBaseHash, parsedValue[2]);
