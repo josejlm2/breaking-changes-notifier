@@ -31,7 +31,9 @@ if(type == 'checkout' && parsedArgs[0] !== parsedArgs[1]){
     displayGitLog();
   }
   
-   displayBreakingChanges(parsedArgs[0], parsedArgs[1]);
+  const gitDiversionHash = GitDiversionValue(parsedArgs[0], parsedArgs[1]).substring(0, 8);
+
+  displayBreakingChanges(gitDiversionHash, parsedArgs[1]);
 
 }
 

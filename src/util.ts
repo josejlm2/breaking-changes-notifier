@@ -51,7 +51,7 @@ export const GitDiversionValue = (hash1: string, hash2: string) => {
 
     const gitCommand = `git merge-base ${hash1} ${hash2}`;
 
-    console.log(gitCommand);
+    // console.log(gitCommand);
 
     const gitDiversion = shell.exec(gitCommand);
 
@@ -79,11 +79,15 @@ export const displayGitLog = () => {
 }
 
 export const displayBreakingChanges = (hash1:string, hash2: string) => {
+
   const result = shell.exec(`git --no-pager log ${hash1}..${hash2} --grep 'BREAKING CHANGES:' | grep 'BREAKING CHANGES'`, {silent:true}).stdout;
-    
-  console.log(colors.bg.Red, colors.fg.White, 'BREAKING CHANGES', colors.Reset);
-  console.log(colors.bg.Red, colors.fg.White, 'Below are the list of breaking changes:', colors.Reset);
-  console.log(colors.fg.Red,`${result}`, colors.Reset);
+  
+ if (result) {
+   console.log(colors.bg.Red, colors.fg.White, 'BREAKING CHANGES', colors.Reset);
+   console.log(colors.bg.Red, colors.fg.White, 'Below are the list of breaking changes:', colors.Reset);
+   console.log(colors.fg.Red,`${result}`, colors.Reset);
+ }
+  
 }
 
 
