@@ -12,7 +12,7 @@ import colors from './colors';
 import { inferGitCommand , parseValueWithRegex , getGitDiversionValue, displayMergeMessage} from './util';
 
 let args = String(yargs.argv.git_params);
-// const args = process.argv.slice(2);
+
 console.log(typeof args);
 
 let type = inferGitCommand(args);
