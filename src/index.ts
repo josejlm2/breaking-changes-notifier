@@ -36,6 +36,7 @@ if(type == 'checkout' && parsedArgs[0] !== parsedArgs[1]){
 }
 
 
+
 if (type === 'merge') {
 
   displayGitLog();
