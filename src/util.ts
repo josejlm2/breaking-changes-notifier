@@ -73,22 +73,34 @@ export const displayMergeMessage = () => {
 
 export const displayGitLog = () => {
   console.log(colors.bg.Blue, colors.fg.White, "GIT LOG", colors.Reset);
-  const result = shell.exec(`git --no-pager log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative -n 15 --color=always`, {silent:true}).stdout;
+  const result = shell.exec(`git --no-pager log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative -n 20 --color=always`, {silent:true}).stdout;
   console.log(result);
   console.log("\n");
 }
 
+export const gitLogShellComand = (hash1:string, hash2: string) => {
+  const result = shell.exec(`git --no-pager log ${hash1}..${hash2} --grep 'BREAKING CHANGES:' | grep 'BREAKING CHANGES'`, {silent:true}).stdout;
+  return String(result); 
+}
+
+export const logBreakingChanges = (result: string) => {
+  
+  console.log(colors.bg.Red, colors.fg.White, 'BREAKING CHANGES', colors.Reset);
+  console.log(colors.bg.Red, colors.fg.White, 'Below are the list of breaking changes:', colors.Reset);
+  console.log(colors.fg.Red,`${result}`, colors.Reset);
+}
+
 export const displayBreakingChanges = (hash1:string, hash2: string) => {
 
-  const result = shell.exec(`git --no-pager log ${hash1}..${hash2} --grep 'BREAKING CHANGES:' | grep 'BREAKING CHANGES'`, {silent:true}).stdout;
+  const result = gitLogShellComand(hash1, hash2);
   
  if (result) {
-   console.log(colors.bg.Red, colors.fg.White, 'BREAKING CHANGES', colors.Reset);
-   console.log(colors.bg.Red, colors.fg.White, 'Below are the list of breaking changes:', colors.Reset);
-   console.log(colors.fg.Red,`${result}`, colors.Reset);
+    logBreakingChanges(result);
  }
   
 }
+
+
 
 
 
