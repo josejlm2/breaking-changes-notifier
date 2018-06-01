@@ -6,6 +6,7 @@ import {gitLogGrepChanges } from './shellCommands';
  *  post-merge - single parameter, a status flag, true if a squash merge
  *  post-checkout - three params - ref of prev, ref of new, true if new branch
  */
+
 export let hasWhitespace = (input: string) :boolean=> {
   return input.includes(' ');
 }
@@ -45,7 +46,7 @@ export const logBreakingChanges = (result: string) => {
 export const displayBreakingChanges = (hash1:string, hash2: string) => {
 
   const result = gitLogGrepChanges(hash1, hash2);
-  
+  console.log(result);
  if (result) {
     logBreakingChanges(result);
  }
