@@ -31,6 +31,7 @@ export const parseValueWithRegex = (regex: string, mergeMess: string):string[] =
   const parsedValue = regexVal.exec(mergeMess);
   if(parsedValue) {
    return parsedValue;
+   
   } else {
     return [];
   }

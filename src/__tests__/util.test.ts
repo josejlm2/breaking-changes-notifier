@@ -1,4 +1,4 @@
-import { inferGitCommand , hasWhitespace , logBreakingChanges, displayBreakingChanges} from '../util';
+import { inferGitCommand , hasWhitespace , logBreakingChanges, displayBreakingChanges, parseValueWithRegex} from '../util';
 import { gitLogGrepChanges , gitLogDiversionHash, gitLogAllMerges, displayGitLog} from '../shellCommands';
 
 describe('utility functions defined in util.ts', () => {
@@ -21,16 +21,21 @@ describe('utility functions defined in util.ts', () => {
      
    });
 
-   it('call gitLogGrepChanges once with undefied', () => {
+  //  it('call gitLogGrepChanges once with undefied', () => {
 
-    const shellCommands = require('../shellCommands');
-    shellCommands.gitLogGrepChanges = jest.fn();
+  //   const shellCommands = require('../shellCommands');
+  //   shellCommands.gitLogGrepChanges = jest.fn();
     
-    displayBreakingChanges('a817657', '10bedf2');
-    expect(gitLogGrepChanges).toBeCalledWith('a817657', '10bedf2');
+  //   displayBreakingChanges('a817657', '10bedf2');
+  //   expect(gitLogGrepChanges).toBeCalledWith('a817657', '10bedf2');
 
-   })
+  //  })
 
+  it('parsed merge commit should have merge value as an array index value ', () => {
+    const mergeMessage =  gitLogAllMerges();
+    const expected = ['Merge: 1718e82 44ecadb','1718e82', '44ecadb' ];
+      expected(parseValueWithRegex(`^Merge:\\s(\\w{7,})\\s(\\w{7,})$`, mergeMessage)
+  })
 
 
 });
@@ -50,7 +55,7 @@ describe('utility functions defined in shellCommands.ts' , () => {
     expect(gitLogAllMerges()).toContain('Merge:');
   });
 
-  it('should display 3 console message in displayGitLog', () => {
+  it('should display 6 console message in total ', () => {
     const spy = jest.spyOn(console,'log');
     displayGitLog();
     expect(spy).toHaveBeenCalledTimes(6);

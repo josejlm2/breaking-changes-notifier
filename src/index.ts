@@ -35,7 +35,7 @@ if (type === 'merge') {
    const mergeMessage =  cmnd.gitLogAllMerges();
   
    const parsedValue = util.parseValueWithRegex(`^Merge:\\s(\\w{7,})\\s(\\w{7,})$`, mergeMessage);
-
+   console.log('the pased ', parsedValue);
   if (parsedValue && parsedValue.length != 0) {
     
     const mergeBaseHash =  cmnd.gitLogDiversionHash(parsedValue[1], parsedValue[2]).substring(0, 8);
