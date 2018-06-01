@@ -1,6 +1,6 @@
 import * as shell from 'shelljs';
 import colors from './colors';
-import {gitLogGrepChanges } from './shellCommands';
+import * as cmnd from './shellCommands';
 /**
  * Different git commands provide different parameters:
  *  post-merge - single parameter, a status flag, true if a squash merge
@@ -17,7 +17,7 @@ export const inferGitCommand = (parameters: string) => {
     return 'merge';
   }
 
-  const paramsArray = parameters.split(' ');
+  const paramsArray = convertArgsToArray(parameters);
   
   switch (paramsArray.length) {
     case 1: return 'merge';
@@ -25,6 +25,61 @@ export const inferGitCommand = (parameters: string) => {
     default: return undefined;
   }
 };
+
+
+export const convertArgsToArray = (input: string) => {
+    const ArgsArray = input.split(" ");
+    return ArgsArray;
+}
+
+// NEW FUNCTION
+export const determineGitDisplayFromParameterType = (gitType: any, commandArgs: string) => {
+
+  const parsedArgs = convertArgsToArray(commandArgs); 
+
+  if(gitType === 'checkout' && parsedArgs[0] !== parsedArgs[1]){
+
+      displayCheckoutLog(parsedArgs[0], parsedArgs[1]);
+
+  }
+  
+  if (gitType === 'merge') {
+  
+    displayMergeLog();
+  
+  }
+}
+
+// NEW FUNCTION
+export const displayMergeLog = () => {
+
+  cmnd.displayGitLog();
+    
+     const mergeMessage =  cmnd.gitLogAllMerges();
+    
+     const parsedValue = parseValueWithRegex(`^Merge:\\s(\\w{7,})\\s(\\w{7,})$`, mergeMessage);
+   
+    if (parsedValue && parsedValue.length != 0) {
+      
+      const mergeBaseHash =  cmnd.gitLogDiversionHash(parsedValue[1], parsedValue[2]).substring(0, 8);
+  
+       displayBreakingChanges(mergeBaseHash, parsedValue[2]);
+      
+    }
+}
+
+// NEW FUNCTION
+// What is the third argument called? 
+export const displayCheckoutLog = (hash1: string, hash2: string) => {
+
+    cmnd.displayGitLog();
+  
+  
+  const gitDiversionHash = cmnd.gitLogDiversionHash(hash1, hash2).substring(0, 8);
+
+  displayBreakingChanges(gitDiversionHash, hash2);
+
+}
 
 export const parseValueWithRegex = (regex: string, mergeMess: string):string[] => {
   const regexVal =  new RegExp(regex, 'm');
@@ -46,7 +101,7 @@ export const logBreakingChanges = (result: string) => {
 
 export const displayBreakingChanges = (hash1:string, hash2: string) => {
 
-  const result = gitLogGrepChanges(hash1, hash2);
+  const result = cmnd.gitLogGrepChanges(hash1, hash2);
  
  if (result) {
     logBreakingChanges(result);
