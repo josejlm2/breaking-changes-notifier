@@ -3,7 +3,7 @@ import colors from './colors';
 
 export const gitLogGrepChanges = (hash1:string, hash2: string) => {
 
-    const result = shell.exec(`git --no-pager log ${hash1}..${hash2} --grep 'BREAKING CHANGES:' | grep 'BREAKING CHANGES'`, {silent:true}).stdout;
+    const result = shell.exec(`git --no-pager log ${hash1}..${hash2} --grep 'BREAKING CHANGES:' | grep 'BREAKING CHANGES'  `, {silent:true}).stdout;
     return String(result); 
 
   }

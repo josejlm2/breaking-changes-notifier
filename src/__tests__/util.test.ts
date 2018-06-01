@@ -31,10 +31,16 @@ describe('utility functions defined in util.ts', () => {
 
   //  })
 
-  it('parsed merge commit should have merge value as an array index value ', () => {
+  it('parsed merge commit should have merge value when matched with regex ', () => {
     const mergeMessage =  gitLogAllMerges();
     const expected = ['Merge: 1718e82 44ecadb','1718e82', '44ecadb' ];
-      expected(parseValueWithRegex(`^Merge:\\s(\\w{7,})\\s(\\w{7,})$`, mergeMessage)
+      expect(parseValueWithRegex(`^Merge:\\s(\\w{7,})\\s(\\w{7,})$`, mergeMessage)).toEqual(expect.arrayContaining(expected));
+  })
+
+  it('parsed merge commit should not appear when matched with invalid regex statement', () => {
+    const mergeMessage =  gitLogAllMerges();
+    const expected:any = [];
+      expect(parseValueWithRegex(`^Merge:\\s(\\w{7,})\\s(\\w)$`, mergeMessage)).toEqual(expect.arrayContaining(expected));
   })
 
 
@@ -47,9 +53,17 @@ describe('utility functions defined in shellCommands.ts' , () => {
       expect(gitLogGrepChanges('a817657', '10bedf2')).toContain('BREAKING CHANGES:');
   });
 
-  it( 'should retrun long commit hash of length 40', () => {
+  it('return nothing when invalid commit hash is passed', () => {
+    expect(gitLogGrepChanges('a817657', '10bef2')).toContain('');
+});
+
+  it( 'should retrun long commit hash of length 41', () => {
       expect(gitLogDiversionHash('10bedf2', '1718e82')).toHaveLength(41);
   });
+
+  it( 'should retrun no commit hash when invalid hash is passed', () => {
+    expect(gitLogDiversionHash('10bef2', '1718e82')).toHaveLength(0);
+});
 
   it("should contian latest merge message commit", () => {
     expect(gitLogAllMerges()).toContain('Merge:');

@@ -47,7 +47,7 @@ export const logBreakingChanges = (result: string) => {
 export const displayBreakingChanges = (hash1:string, hash2: string) => {
 
   const result = gitLogGrepChanges(hash1, hash2);
-  console.log(result);
+ 
  if (result) {
     logBreakingChanges(result);
  }
