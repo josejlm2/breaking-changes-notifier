@@ -17,13 +17,12 @@
   "dependencies": {
     "@types/shelljs": "^0.7.9",
     "@types/yargs": "^11.0.0",
-    "npm": "^6.1.0",
     "shelljs": "^0.8.2",
     "yargs": "^11.0.0"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json --watch",
-    "breaking-changes": "./bin/breaking-changes ",
+    "breaking-changes": "./bin/breaking-changes 1234 1234 1",
     "test": "jest --config=./jest.config.json"
   },
   "devDependencies": {
